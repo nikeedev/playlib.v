@@ -1,4 +1,16 @@
-module vgamedev
+module playlib
+
+import gg
+import os
+
+struct App {
+
+}
+
+struct Scene {
+	
+}
+
 
 pub struct Vec2 {
 mut:

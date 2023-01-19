@@ -1,7 +1,9 @@
 Module {
-	name: 'vgamedev'
-	description: '<EOF>'
-	version: '0.0.0'
+	name: 'playlib'
+	description: 'Playlib library in V, usually for creating games'
+	version: '0.1.0'
 	license: 'MIT'
-	dependencies: []
+	dependencies: [
+		"gg"
+	]
 }
