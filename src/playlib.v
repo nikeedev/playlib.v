@@ -1,19 +1,28 @@
 module playlib
 
 import gg
+import gx
 import os
 
-struct App {
 
+// not implemented yet
+// pub struct Scene {
+// pub mut:
+
+// }
+
+
+pub fn draw_filled(rect gg.Rect, ctx &gg.Context, color gx.Color) {
+	ctx.draw_rect_filled(rect.x, rect.y, rect.x, rect.y, color)
 }
 
-struct Scene {
-	
+pub fn draw_empty(rect gg.Rect, ctx &gg.Context, color gx.Color) {
+	ctx.draw_rect_empty(rect.x, rect.y, rect.x, rect.y, color)
 }
 
 
 pub struct Vec2 {
-mut:
+pub mut:
 	x int
 	y int
 }
@@ -25,23 +34,5 @@ pub fn (vec Vec2) str() string {
 
 pub fn (vec1 Vec2) + (vec2 Vec2) Vec2 {
 	return Vec2{vec1.x + vec2.x, vec1.y + vec2.y}
-}
-
-pub struct Vec3 {
-mut:
-	x int
-	y int
-	z int
-}
-
-
-// converts a Vec3 object to string
-pub fn (vec Vec3) str() string {
-	return '{x: $vec.x, y: $vec.y, z: $vec.z}'
-}
-
-
-pub fn (vec1 Vec3) + (vec2 Vec3) Vec3 {
-	return Vec3{vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z}
 }
 
