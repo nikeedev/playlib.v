@@ -1,6 +1,6 @@
 # Binaries for programs and plugins
 main
-vgamedev
+playlib
 *.exe
 *.exe~
 *.so
