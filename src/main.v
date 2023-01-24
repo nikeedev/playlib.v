@@ -8,7 +8,7 @@ import os
 struct App {
 mut:
 	ctx    &gg.Context = unsafe { nil }
-	image gg.Image
+	image []gg.Image
 }
 
 const (
@@ -47,21 +47,36 @@ fn main() {
 }
 
 fn init(mut app &App) {
-	mut logo_path := os.resource_abs_path(os.join_path('assets', 'trains.png'))
-	app.image = app.ctx.create_image(logo_path)
+	mut paths := ["assets/blue_train.png", "assets/red_train.png", "assets/green_train.png", "assets/yellow_train.png"]
+
+	// mut logo_path := os.resource_abs_path(os.join_path('assets', 'trains.png'))
+
+	for path in paths {
+		app.image.prepend(app.ctx.create_image(path))
+	}
+
+	println(app.image.len)
 }
 
-pub fn (app &App) draw() {
+fn (app &App) draw() {
 	mut rect := gg.Rect{x: 20, y: 20, width: 60, height: 60}
 
 	// rect.pos.x = 60
+	mut size := f32(6.7)
+	// playlib.draw_filled(rect, app.ctx, gx.blue)
 
-	playlib.draw_filled(rect, app.ctx, gx.blue)
+	mut part_sizes := [gg.Rect{ 0, 0, 27, 16 }, gg.Rect{ 0, 0, 25, 15 }, gg.Rect{ 0, 0, 25, 15 }, gg.Rect{ 0, 0, 26, 16 }]
 
-	mut img_size := gg.Rect{ 0, 0, 128, 128 }
-	mut part_size := gg.Rect{ 6, 4, 26, 14 }
 
-	app.ctx.draw_image_part(img_size, part_size, app.image)
+	for img in app.image {
+		mut part_size := part_sizes[app.image.index(img)]
+
+		mut img_index := app.image.index(img)
+
+		mut img_size := gg.Rect{ img_index*part_size.width, img_index*part_size.height, part_size.width * size, part_size.height * size }
+
+		app.ctx.draw_image_part(img_size, part_size, img)
+	}
 
 	app.ctx.draw_text_def(10, 25, 'game.')
 }
