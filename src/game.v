@@ -13,5 +13,14 @@ fn main() {
 		println(vec.str())
 	}
 
+	for i := 0; i < vecs.len; i++ {
+		vecs[i] += playlib.Vec2{1, 1}
+	}
+	println("\nNew: ")
+
+	for vec in vecs {
+		println(vec.str())
+	}
+
 	// println(pos.str())
 }
