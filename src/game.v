@@ -5,22 +5,20 @@ import gg
 import gx
 import os
 
+fn draw(ctx gg.Context, dt f32) {
+	ctx
+}
+
+fn init( &App) {
+
+}
+
+const (
+	window_size = playlib.Vec2{800, 600}
+)
 
 fn main() {
-	mut vecs := [playlib.Vec2{5, 5}, playlib.Vec2{6, 6}, playlib.Vec2{7, 7}]
 
-	for vec in vecs {
-		println(vec.str())
-	}
+	game := playlib.create_app(window_size, "Playlib.v Test", draw(), init())
 
-	for i := 0; i < vecs.len; i++ {
-		vecs[i] += playlib.Vec2{1, 1}
-	}
-	println("\nNew: ")
-
-	for vec in vecs {
-		println(vec.str())
-	}
-
-	// println(pos.str())
 }

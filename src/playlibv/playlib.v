@@ -6,6 +6,8 @@ import os
 
 type DrawFn = fn (ctx gg.Context, dt f32)
 
+type IninFn = fn (mut app &App)
+
 struct App {
 mut:
 	ctx    &gg.Context = unsafe { nil }
@@ -13,17 +15,17 @@ mut:
 	init fn (mut app &App)
 }
 
-pub fn create_app(window_size Vec2, window_title string, draw_me DrawFn, init fn (mut app &App)) App {
+pub fn create_app(window_size Vec2, window_title string, draw_me DrawFn, init IninFn) App {
 	mut app := App{
 		ctx: 0
 	}
 
 	app.ctx := gg.new_context(
 		bg_color: gx.white
-		width: win_width
-		height: win_height
+		width: window_size.x
+		height: window_size.y
 		create_window: true
-		window_title: win_title
+		window_title: window_title
 		frame_fn: frame
 		user_data: app
 		init_fn: init
