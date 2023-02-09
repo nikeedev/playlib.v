@@ -1,4 +1,4 @@
-module playlib
+module playlibv
 
 import gg
 import gx
@@ -8,19 +8,19 @@ type DrawFn = fn (ctx gg.Context, dt f32)
 
 type IninFn = fn (mut app &App)
 
-struct App {
-mut:
+pub struct App {
+pub mut:
 	ctx    &gg.Context = unsafe { nil }
-	draw_me DrawFn
-	init fn (mut app &App)
+	draw_me voidptr
+	init voidptr
 }
 
-pub fn create_app(window_size Vec2, window_title string, draw_me DrawFn, init IninFn) App {
-	mut app := App{
+pub fn create_app(window_size Vec2, window_title string, draw_me DrawFn, init IninFn) &App {
+	mut app := &App{
 		ctx: 0
 	}
 
-	app.ctx := gg.new_context(
+	app.ctx = gg.new_context(
 		bg_color: gx.white
 		width: window_size.x
 		height: window_size.y
@@ -34,22 +34,14 @@ pub fn create_app(window_size Vec2, window_title string, draw_me DrawFn, init In
 	return app
 }
 
-pub fn (app &App) run() {
+pub fn (mut app App) run() {
 	app.ctx.run()
 }
 
 
-fn init(mut app &App) {
-
-}
-
-fn (app &App) draw(draw_me DrawFn) {
-
-}
-
 fn frame(app &App) {
 	app.ctx.begin()
-	app.draw()
+	app.draw(app.gg, 0.01)
 	app.ctx.end()
 }
 
@@ -68,7 +60,7 @@ struct Rect {
 }
 
 pub fn (rect &Rect) draw_filled(ctx &gg.Context) {
-	ctx.draw_rect_filled(rect.x, rect.y, rect.x, rect.y, color)
+	ctx.draw_rect_filled(rect.pos.x, rect.pos.y, rect.size.x, rect.size.y, rect.color)
 }
 
 pub fn (rect &Rect) draw_empty(ctx &gg.Context) {
