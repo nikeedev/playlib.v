@@ -41,7 +41,9 @@ pub fn (mut app App) run() {
 
 fn frame(app &App) {
 	app.ctx.begin()
+
 	app.draw(app.gg, 0.01)
+	
 	app.ctx.end()
 }
 
