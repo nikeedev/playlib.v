@@ -11,13 +11,15 @@ type IninFn = fn (mut app &App)
 pub struct App {
 pub mut:
 	ctx    &gg.Context = unsafe { nil }
-	draw_me voidptr
-	init voidptr
+	draw DrawFn
+	init IninFn
 }
 
-pub fn create_app(window_size Vec2, window_title string, draw_me DrawFn, init IninFn) &App {
+pub fn create_app(window_size Vec2, window_title string, draw DrawFn, init IninFn) &App {
 	mut app := &App{
 		ctx: 0
+		init: init
+		draw: draw
 	}
 
 	app.ctx = gg.new_context(
@@ -42,8 +44,8 @@ pub fn (mut app App) run() {
 fn frame(app &App) {
 	app.ctx.begin()
 
-	app.draw(app.gg, 0.01)
-	
+	app.draw(app.ctx, 0.01)
+
 	app.ctx.end()
 }
 

@@ -6,12 +6,14 @@ import gx
 import os
 
 fn draw(ctx gg.Context, dt f32) {
-/*
-	if app.ctx.pressed_keys[int(gg.KeyCode.w)] || app.ctx.pressed_keys[int(gg.KeyCode.up)] {
-		println("Up key down")
-		app.img.vel.y -= speed
-	}
-*/
+
+
+	/*
+		if ctx.pressed_keys[int(gg.KeyCode.w)] || ctx.pressed_keys[int(gg.KeyCode.up)] {
+			println("Up key down")
+			app.img.vel.y -= speed
+		}
+	*/
 }
 
 fn init(mut app &playlibv.App) {
