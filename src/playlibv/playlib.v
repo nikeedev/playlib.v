@@ -4,7 +4,7 @@ import gg
 import gx
 import os
 
-type DrawFn = fn (ctx gg.Context, dt f32)
+type DrawFn = fn (ctx &gg.Context, dt f32)
 
 type IninFn = fn (mut app &App)
 
@@ -57,7 +57,8 @@ fn frame(app &App) {
 // }
 
 
-struct Rect {
+pub struct Rect {
+pub mut:
 	pos Vec2
 	size Vec2
 	color gx.Color
