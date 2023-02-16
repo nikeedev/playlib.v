@@ -88,3 +88,10 @@ pub fn (vec1 Vec2) + (vec2 Vec2) Vec2 {
 	return Vec2{vec1.x + vec2.x, vec1.y + vec2.y}
 }
 
+pub struct Player {
+	rect Rect
+	image gg.Image
+	vel Vec2
+}
+
+
