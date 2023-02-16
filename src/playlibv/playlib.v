@@ -24,8 +24,8 @@ pub fn create_app(window_size Vec2, window_title string, draw DrawFn, init IninF
 
 	app.ctx = gg.new_context(
 		bg_color: gx.white
-		width: window_size.x
-		height: window_size.y
+		width: int(window_size.x)
+		height: int(window_size.y)
 		create_window: true
 		window_title: window_title
 		frame_fn: frame
@@ -75,8 +75,8 @@ pub fn (rect &Rect) draw_empty(ctx &gg.Context) {
 
 pub struct Vec2 {
 pub mut:
-	x int
-	y int
+	x f32
+	y f32
 }
 
 // converts a Vec2 object to string
@@ -88,10 +88,12 @@ pub fn (vec1 Vec2) + (vec2 Vec2) Vec2 {
 	return Vec2{vec1.x + vec2.x, vec1.y + vec2.y}
 }
 
+
 pub struct Player {
 	rect Rect
-	image gg.Image
+	image gg.Image = unsafe { nil }
 	vel Vec2
 }
+
 
 
