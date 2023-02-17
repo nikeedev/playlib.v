@@ -88,12 +88,28 @@ pub fn (vec1 Vec2) + (vec2 Vec2) Vec2 {
 	return Vec2{vec1.x + vec2.x, vec1.y + vec2.y}
 }
 
+pub struct Image {
+pub mut:
+	image &gg.Image = unsafe { nil }
+	rect Rect
+}
 
+pub fn (mut img Image) load(file_name string) {
+	img.image = app.img.img = app.ctx.create_image(os.resource_abs_path(app.file_name))
+}
+
+
+fn (mut img Image) draw(app &App,) {
+	app.ctx.draw_image(img.rect.pos.x, img.rect.pos.y, img.image.width, image.img.height, img.image)
+}
+
+
+/*
 pub struct Player {
 	rect Rect
 	image gg.Image = unsafe { nil }
 	vel Vec2
 }
-
+*/
 
 
