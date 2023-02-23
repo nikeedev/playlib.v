@@ -10,16 +10,16 @@ type IninFn = fn (mut app &App)
 
 pub struct App {
 pub mut:
+	current_scene int
+	scene Scene
 	ctx    &gg.Context = unsafe { nil }
-	draw DrawFn
-	init IninFn
+	scenes []Scene
 }
 
-pub fn create_app(window_size Vec2, window_title string, draw DrawFn, init IninFn) &App {
+
+pub fn create_app(window_size Vec2, window_title string) &App {
 	mut app := &App{
 		ctx: 0
-		init: init
-		draw: draw
 	}
 
 	app.ctx = gg.new_context(
@@ -30,25 +30,47 @@ pub fn create_app(window_size Vec2, window_title string, draw DrawFn, init IninF
 		window_title: window_title
 		frame_fn: frame
 		user_data: app
-		init_fn: init
 	)
 
 	return app
 }
 
 pub fn (mut app App) run() {
+	app.scene = app.scenes[app.current_scene]
+
+	app.ctx.config = gg.Config{
+		bg_color: gx.white
+		width: app.ctx.config.width
+		height: app.ctx.config.height
+		create_window: true
+		window_title: app.ctx.config.window_title
+		frame_fn: app.ctx.config.frame_fn
+		user_data: app.ctx.config.user_data
+		init_fn: app.scene.init
+	}
+
 	app.ctx.run()
 }
 
+pub fn (mut app App) load(old &App) {
+	app.scene = app.scenes[app.current_scene]
+	
+	app.run()
+}
 
 fn frame(app &App) {
 	app.ctx.begin()
 
-	app.draw(app.ctx, 0.01)
+	app.scene.draw(app.ctx, 1 / 60)
 
 	app.ctx.end()
 }
 
+pub struct Scene {
+pub mut:
+	draw DrawFn
+	init IninFn
+}
 
 // not implemented yet
 // pub struct Scene {
@@ -94,13 +116,13 @@ pub mut:
 	rect Rect
 }
 
-pub fn (mut img Image) load(file_name string, app &App) {
-	img.image = app.ctx.create_image(os.resource_abs_path(file_name))
+pub fn (mut img Image) load(file_name string, ctx &gg.Context) {
+	img.image = ctx.create_image(os.resource_abs_path(file_name))
 }
 
 
-fn (mut img Image) draw(app &App) {
-	app.ctx.draw_image(img.rect.pos.x, img.rect.pos.y, img.image.width, img.image.height, img.image)
+fn (mut img Image) draw(ctx &gg.Context) {
+	ctx.draw_image(img.rect.pos.x, img.rect.pos.y, img.image.width, img.image.height, img.image)
 }
 
 

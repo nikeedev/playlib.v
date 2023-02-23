@@ -19,6 +19,12 @@ __global (
 		size: Vec2{60, 60}
 		color: gx.blue
 	}
+
+	rect2 = Rect{
+		pos: Vec2{120, 120}
+		size: Vec2{90, 60}
+		color: gx.red
+	}
 )
 
 fn draw(ctx &gg.Context, dt f32) {
@@ -50,15 +56,61 @@ fn draw(ctx &gg.Context, dt f32) {
 
 }
 
+fn draw2(ctx &gg.Context, dt f32) {
+
+	rect2.draw_filled(ctx)
+
+	if ctx.pressed_keys[int(gg.KeyCode.up)] {
+		vel.y -= speed
+	}
+	if ctx.pressed_keys[int(gg.KeyCode.down)] {
+		vel.y += speed
+	}
+	if ctx.pressed_keys[int(gg.KeyCode.left)] {
+		vel.x -= speed
+	}
+	if ctx.pressed_keys[int(gg.KeyCode.right)] {
+		vel.x += speed
+	}
+
+	if ctx.pressed_keys[int(gg.KeyCode.escape)] {
+		exit(0)
+	}
+
+	vel.x *= 0.7
+	vel.y *= 0.7
+
+	rect2.pos.x += vel.x
+	rect2.pos.y += vel.y
+
+}
+
 fn init(mut app &App) {
+
+}
+
+fn init2(mut app &App) {
 
 }
 
 
 fn main() {
 
-	mut game := playlibv.create_app(window_size, "Playlib.v Test", draw, init)
+	mut game := playlibv.create_app(window_size, "Playlib.v Test")
 
-	game.run()
+	mut main_scene := playlibv.Scene{draw: draw, init: init}
 
+	mut main_scene2 := playlibv.Scene{draw: draw2, init: init2}
+
+	game.scenes << main_scene
+
+	game.scenes << main_scene2
+
+	game.current_scene = 0
+
+	mut old := game.run()
+
+	game.current_scene = 1
+
+	game.load(old)
 }
