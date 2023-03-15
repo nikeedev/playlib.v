@@ -52,22 +52,6 @@ pub fn (mut app App) run() {
 	app.ctx.run()
 }
 
-pub fn (mut app App) load(old &App) {
-	app.scene = app.scenes[app.current_scene]
-
-	app.ctx.config = gg.Config{
-		bg_color: gx.white
-		width: app.ctx.config.width
-		height: app.ctx.config.height
-		create_window: false
-		window_title: app.ctx.config.window_title
-		frame_fn: app.ctx.config.frame_fn
-		user_data: app.ctx.config.user_data
-		init_fn: app.scene.init
-	}
-
-	app.run()
-}
 
 fn frame(app &App) {
 	app.ctx.begin()

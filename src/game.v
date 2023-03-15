@@ -108,9 +108,6 @@ fn main() {
 
 	game.current_scene = 0
 
-	mut old := game.run()
+	game.run()
 
-	game.current_scene = 1
-
-	game.load(old)
 }
