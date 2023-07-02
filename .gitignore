@@ -1,6 +1,6 @@
 # Binaries for programs and plugins
 main
-playlib
+playlib.exe
 *.exe
 *.exe~
 *.so

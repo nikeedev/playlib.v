@@ -1,4 +1,4 @@
-module playlibv
+module playlib
 
 import gg
 import gx
@@ -17,7 +17,7 @@ pub mut:
 }
 
 
-pub fn create_app(window_size Vec2, window_title string) &App {
+pub fn new_app(window_size Vec2, window_title string) &App {
 	mut app := &App{
 		ctx: 0
 	}
@@ -36,7 +36,7 @@ pub fn create_app(window_size Vec2, window_title string) &App {
 }
 
 pub fn (mut app App) run() {
-	app.scene = app.scenes[app.current_scene]
+	app.scene = app.scenes[app.current_scene - 1]
 
 	app.ctx.config = gg.Config{
 		bg_color: gx.white
@@ -49,7 +49,7 @@ pub fn (mut app App) run() {
 		init_fn: app.scene.init
 	}
 
-	app.ctx.run()
+	go app.ctx.run()
 }
 
 
@@ -111,8 +111,8 @@ pub mut:
 	rect Rect
 }
 
-pub fn (mut img Image) load(file_name string, ctx &gg.Context) {
-	img.image = ctx.create_image(os.resource_abs_path(file_name))
+pub fn (mut img Image) load(file_name string, ctx &gg.Context) ! {
+	img.image = ctx.create_image(os.resource_abs_path(file_name)) or { panic(err) }
 }
 
 
